@@ -1,0 +1,7 @@
+Дата: 2026-11-09 12:32:48
+Команда: kubectl set image deployment/campus-api api=localhost:5001/campus-api:manual-drift -n campus-board
+Ожидание: через 90 секунд ручная правка остаётся, контроллер её не откатывает
+Старт: 12:31:18
+Образ до эксперимента: localhost:5001/campus-api:22830c4f7075e8f114dfd947672deb8f5335460b
+Образ через 90 секунд: localhost:5001/campus-api:manual-drift
+Вывод: расхождение осталось. В push-модели кластер сам не возвращается к желаемому состоянию.

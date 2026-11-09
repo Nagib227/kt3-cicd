@@ -1,0 +1,77 @@
+[0KRunning with gitlab-runner 17.11.4 (cc77edaf)[0;m
+[0K  on kubernetes E_EMWLH32, system ID: r_ROU9kMKb6T3t[0;m
+section_start:1794216606:prepare_executor
+[0K[0K[36;1mPreparing the "kubernetes" executor[0;m[0;m
+[0KUsing Kubernetes namespace: gitlab-runner[0;m
+[0KUsing Kubernetes executor with image gcr.io/kaniko-project/executor:v1.23.2-debug ...[0;m
+[0KUsing attach strategy to execute scripts...[0;m
+section_end:1794216606:prepare_executor
+[0Ksection_start:1794216606:prepare_script
+[0K[0K[36;1mPreparing environment[0;m[0;m
+[0KUsing FF_USE_POD_ACTIVE_DEADLINE_SECONDS, the Pod activeDeadlineSeconds will be set to the job timeout: 25m0s...[0;m
+Waiting for pod gitlab-runner/runner-eemwlh32-project-1-concurrent-0-5bhlimzs to be running, status is Pending
+Running on runner-eemwlh32-project-1-concurrent-0-5bhlimzs via gitlab-runner-859d6b586c-99986...
+
+section_end:1794216609:prepare_script
+[0Ksection_start:1794216609:get_sources
+[0K[0K[36;1mGetting source from Git repository[0;m[0;m
+[32;1mFetching changes with git depth set to 20...[0;m
+Initialized empty Git repository in /builds/root/campus-app/.git/
+[32;1mCreated fresh repository.[0;m
+[32;1mChecking out 22830c4f as detached HEAD (ref is main)...[0;m
+
+[32;1mSkipping Git submodules setup[0;m
+
+section_end:1794216609:get_sources
+[0Ksection_start:1794216609:step_script
+[0K[0K[36;1mExecuting "step_script" stage of the job script[0;m[0;m
+[32;1m$ mkdir -p /kaniko/.docker[0;m
+[32;1m$ echo '{"insecureRegistries":["kind-registry:5000"]}' > /kaniko/.docker/config.json[0;m
+[32;1m$ /kaniko/executor --context "$CI_PROJECT_DIR" --dockerfile "$CI_PROJECT_DIR/Dockerfile" --destination "$REGISTRY/$IMAGE_REPO:$CI_COMMIT_SHA" --digest-file "$CI_PROJECT_DIR/digest.txt" --insecure-registry "$REGISTRY" --skip-tls-verify-registry "$REGISTRY" --build-arg "APP_VERSION=$CI_COMMIT_SHORT_SHA" --verbosity info[0;m
+[36mINFO[0m[0000] Using dockerignore file: /builds/root/campus-app/.dockerignore 
+[36mINFO[0m[0000] Retrieving image manifest mirror.gcr.io/library/python:3.13-slim 
+[36mINFO[0m[0000] Retrieving image mirror.gcr.io/library/python:3.13-slim from registry mirror.gcr.io 
+[36mINFO[0m[0001] Built cross stage deps: map[]                
+[36mINFO[0m[0001] Retrieving image manifest mirror.gcr.io/library/python:3.13-slim 
+[36mINFO[0m[0001] Returning cached image manifest              
+[36mINFO[0m[0001] Executing 0 build triggers                   
+[36mINFO[0m[0001] Building stage 'mirror.gcr.io/library/python:3.13-slim' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0001] Unpacking rootfs as cmd COPY app.py /app/app.py requires it. 
+[36mINFO[0m[0019] WORKDIR /app                                 
+[36mINFO[0m[0019] Cmd: workdir                                 
+[36mINFO[0m[0019] Changed working directory to /app            
+[36mINFO[0m[0019] Creating directory /app with uid -1 and gid -1 
+[36mINFO[0m[0019] Taking snapshot of files...                  
+[36mINFO[0m[0019] COPY app.py /app/app.py                      
+[36mINFO[0m[0019] Taking snapshot of files...                  
+[36mINFO[0m[0019] ARG APP_VERSION=dev                          
+[36mINFO[0m[0019] RUN useradd --uid 10001 --create-home appuser 
+[36mINFO[0m[0019] Initializing snapshotter ...                 
+[36mINFO[0m[0019] Taking snapshot of full filesystem...        
+[36mINFO[0m[0019] Cmd: /bin/sh                                 
+[36mINFO[0m[0019] Args: [-c useradd --uid 10001 --create-home appuser] 
+[36mINFO[0m[0019] Running: [/bin/sh -c useradd --uid 10001 --create-home appuser] 
+[36mINFO[0m[0019] Taking snapshot of full filesystem...        
+[36mINFO[0m[0019] USER 10001                                   
+[36mINFO[0m[0019] Cmd: USER                                    
+[36mINFO[0m[0019] ENV PORT=8080     APP_VERSION=${APP_VERSION}     READY=true     PYTHONDONTWRITEBYTECODE=1     PYTHONUNBUFFERED=1 
+[36mINFO[0m[0019] EXPOSE 8080                                  
+[36mINFO[0m[0019] Cmd: EXPOSE                                  
+[36mINFO[0m[0019] Adding exposed port: 8080/tcp                
+[36mINFO[0m[0019] ENTRYPOINT ["python", "/app/app.py"]         
+[36mINFO[0m[0019] Pushing image to kind-registry:5000/campus-api:22830c4f7075e8f114dfd947672deb8f5335460b 
+[36mINFO[0m[0020] Pushed kind-registry:5000/campus-api@sha256:7c42e0fa441161ef881e534f6d46eb366ba94e6a6f9cc3e1e6927345f72eef81 
+
+section_end:1794216630:step_script
+[0Ksection_start:1794216630:upload_artifacts_on_success
+[0K[0K[36;1mUploading artifacts for successful job[0;m[0;m
+[32;1mUploading artifacts...[0;m
+digest.txt: found 1 matching artifact files and directories[0;m 
+Uploading artifacts as "archive" to coordinator... 201 Created[0;m  id[0;m=5 responseStatus[0;m=201 Created token[0;m=64_k6sjFy
+
+section_end:1794216631:upload_artifacts_on_success
+[0Ksection_start:1794216631:cleanup_file_variables
+[0K[0K[36;1mCleaning up project directory and file based variables[0;m[0;m
+
+section_end:1794216631:cleanup_file_variables
+[0K[32;1mJob succeeded[0;m

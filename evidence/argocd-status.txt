@@ -1,0 +1,6 @@
+Дата: 2026-11-09 12:50:18
+Application: campus-api
+Sync: Synced
+Health: Healthy
+Образ: localhost:5001/campus-api@sha256:f8009d301996af9364c3dc3950d2f4933348496c27cd36acec9b2ee8ea3cc2ca
+Config commit: b5f544a6 Promote campus-api 58cc5d2e sha256:f8009d301996af9364c3dc3950d2f4933348496c27cd36acec9b2ee8ea3cc2ca

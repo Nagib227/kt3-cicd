@@ -1,0 +1,46 @@
+stages:
+  - test
+  - build
+  - promote
+
+variables:
+  REGISTRY: kind-registry:5000
+  IMAGE_REPO: campus-api
+
+test:
+  stage: test
+  image: mirror.gcr.io/library/python:3.13-slim
+  timeout: 10m
+  script:
+    - python -m unittest -v test_app.py
+
+build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [""]
+  timeout: 25m
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo '{"insecureRegistries":["kind-registry:5000"]}' > /kaniko/.docker/config.json
+    - /kaniko/executor --context "$CI_PROJECT_DIR" --dockerfile "$CI_PROJECT_DIR/Dockerfile" --destination "$REGISTRY/$IMAGE_REPO:$CI_COMMIT_SHA" --digest-file "$CI_PROJECT_DIR/digest.txt" --insecure-registry "$REGISTRY" --skip-tls-verify-registry "$REGISTRY" --build-arg "APP_VERSION=$CI_COMMIT_SHORT_SHA" --verbosity info
+  artifacts:
+    paths:
+      - digest.txt
+    expire_in: 1 day
+
+promote:
+  stage: promote
+  image: mirror.gcr.io/library/alpine:3.20
+  timeout: 10m
+  script:
+    - apk add --no-cache git
+    - git clone "http://gitlab.local:8929/root/campus-config.git" /tmp/config
+    - cd /tmp/config
+    - git config user.email "ci@gitlab.local"
+    - git config user.name "campus-ci"
+    - DIGEST=$(tr -d '[:space:]' < "$CI_PROJECT_DIR/digest.txt")
+    - 'sed -i "s#digest: sha256:.*#digest: ${DIGEST}#" campus-api/kustomization.yaml'
+    - git add campus-api/kustomization.yaml
+    - git commit -m "Promote campus-api ${CI_COMMIT_SHORT_SHA} ${DIGEST}"
+    - git push "http://root:${CONFIG_TOKEN}@gitlab.local:8929/root/campus-config.git" HEAD:main

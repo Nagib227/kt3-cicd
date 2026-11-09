@@ -1,0 +1,73 @@
+[0KRunning with gitlab-runner 17.11.4 (cc77edaf)[0;m
+[0K  on kubernetes E_EMWLH32, system ID: r_ROU9kMKb6T3t[0;m
+section_start:1794216924:prepare_executor
+[0K[0K[36;1mPreparing the "kubernetes" executor[0;m[0;m
+[0KUsing Kubernetes namespace: gitlab-runner[0;m
+[0KUsing Kubernetes executor with image mirror.gcr.io/library/alpine:3.20 ...[0;m
+[0KUsing attach strategy to execute scripts...[0;m
+section_end:1794216924:prepare_executor
+[0Ksection_start:1794216924:prepare_script
+[0K[0K[36;1mPreparing environment[0;m[0;m
+[0KUsing FF_USE_POD_ACTIVE_DEADLINE_SECONDS, the Pod activeDeadlineSeconds will be set to the job timeout: 10m0s...[0;m
+Waiting for pod gitlab-runner/runner-eemwlh32-project-1-concurrent-0-a6z1i0zt to be running, status is Pending
+Running on runner-eemwlh32-project-1-concurrent-0-a6z1i0zt via gitlab-runner-859d6b586c-99986...
+
+section_end:1794216928:prepare_script
+[0Ksection_start:1794216928:get_sources
+[0K[0K[36;1mGetting source from Git repository[0;m[0;m
+[32;1mFetching changes with git depth set to 20...[0;m
+Initialized empty Git repository in /builds/root/campus-app/.git/
+[32;1mCreated fresh repository.[0;m
+[32;1mChecking out 58cc5d2e as detached HEAD (ref is main)...[0;m
+
+[32;1mSkipping Git submodules setup[0;m
+
+section_end:1794216928:get_sources
+[0Ksection_start:1794216928:download_artifacts
+[0K[0K[36;1mDownloading artifacts[0;m[0;m
+[32;1mDownloading artifacts for build (8)...[0;m
+Downloading artifacts from coordinator... ok      [0;m  host[0;m=gitlab.local:8929 id[0;m=8 responseStatus[0;m=200 OK token[0;m=64_cCh8CT
+
+section_end:1794216929:download_artifacts
+[0Ksection_start:1794216929:step_script
+[0K[0K[36;1mExecuting "step_script" stage of the job script[0;m[0;m
+[32;1m$ apk add --no-cache git[0;m
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.20/main/x86_64/APKINDEX.tar.gz
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.20/community/x86_64/APKINDEX.tar.gz
+(1/13) Installing ca-certificates (20261020-r0)
+(2/13) Installing brotli-libs (1.1.0-r2)
+(3/13) Installing c-ares (1.33.1-r0)
+(4/13) Installing libunistring (1.2-r0)
+(5/13) Installing libidn2 (2.3.7-r0)
+(6/13) Installing nghttp2-libs (1.62.1-r0)
+(7/13) Installing libpsl (0.21.5-r1)
+(8/13) Installing zstd-libs (1.5.6-r0)
+(9/13) Installing libcurl (8.14.1-r2)
+(10/13) Installing libexpat (2.8.1-r0)
+(11/13) Installing pcre2 (10.43-r0)
+(12/13) Installing git (2.45.4-r0)
+(13/13) Installing git-init-template (2.45.4-r0)
+Executing busybox-1.36.1-r31.trigger
+Executing ca-certificates-20261020-r0.trigger
+OK: 20 MiB in 27 packages
+[32;1m$ git clone "http://gitlab.local:8929/root/campus-config.git" /tmp/config[0;m
+Cloning into '/tmp/config'...
+[32;1m$ cd /tmp/config[0;m
+[32;1m$ git config user.email "ci@gitlab.local"[0;m
+[32;1m$ git config user.name "campus-ci"[0;m
+[32;1m$ DIGEST=$(tr -d '[:space:]' < "$CI_PROJECT_DIR/digest.txt")[0;m
+[32;1m$ sed -i "s#digest: sha256:.*#digest: ${DIGEST}#" campus-api/kustomization.yaml[0;m
+[32;1m$ git add campus-api/kustomization.yaml[0;m
+[32;1m$ git commit -m "Promote campus-api ${CI_COMMIT_SHORT_SHA} ${DIGEST}"[0;m
+[main b5f544a] Promote campus-api 58cc5d2e sha256:f8009d301996af9364c3dc3950d2f4933348496c27cd36acec9b2ee8ea3cc2ca
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+[32;1m$ git push "http://root:REDACTED@gitlab.local:8929/root/campus-config.git" HEAD:main[0;m
+To http://gitlab.local:8929/root/campus-config.git
+   ac67bbe..b5f544a  HEAD -> main
+
+section_end:1794217085:step_script
+[0Ksection_start:1794217085:cleanup_file_variables
+[0K[0K[36;1mCleaning up project directory and file based variables[0;m[0;m
+
+section_end:1794217086:cleanup_file_variables
+[0K[32;1mJob succeeded[0;m

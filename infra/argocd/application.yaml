@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: default
+  namespace: argocd
+spec:
+  sourceRepos:
+    - "*"
+  destinations:
+    - namespace: "*"
+      server: "*"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: campus-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitlab.local:8929/root/campus-config.git
+    targetRevision: main
+    path: campus-api
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: campus-board
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: campus-config-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: http://gitlab.local:8929/root/campus-config.git
+  insecure: "true"

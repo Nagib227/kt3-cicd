@@ -1,0 +1,6 @@
+Дата: 2026-11-09 12:31:18
+Команда: kubectl get deployment campus-api -n campus-board
+Ожидание: образ с тегом commit 22830c4f7075e8f114dfd947672deb8f5335460b
+Факт: localhost:5001/campus-api:22830c4f7075e8f114dfd947672deb8f5335460b
+Smoke: {"status": "ready", "version": "22830c4f"}
+Вывод: пайплайн сам выложил образ

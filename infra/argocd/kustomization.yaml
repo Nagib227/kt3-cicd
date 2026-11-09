@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+resources:
+  - namespace.yaml
+  - core-install.yaml
+images:
+  - name: redis
+    newName: mirror.gcr.io/library/redis
+  - name: public.ecr.aws/docker/library/redis
+    newName: mirror.gcr.io/library/redis
+  - name: quay.io/argoproj/argocd
+    newName: quay.io/argoproj/argocd

@@ -1,0 +1,15 @@
+Дата: 2026-11-09 12:50:24
+Команда: kubectl set image deployment/campus-api api=localhost:5001/campus-api:manual-drift -n campus-board
+Ожидание: ArgoCD видит расхождение и возвращает образ из Git
+Старт: 12:50:18
+Конец: 12:50:24
+Образ из Git: localhost:5001/campus-api@sha256:f8009d301996af9364c3dc3950d2f4933348496c27cd36acec9b2ee8ea3cc2ca
+Ручная правка замечена: True
+OutOfSync замечен: True
+Образ после восстановления: localhost:5001/campus-api@sha256:f8009d301996af9364c3dc3950d2f4933348496c27cd36acec9b2ee8ea3cc2ca
+
+Журнал:
+12:50:19 image=localhost:5001/campus-api:manual-drift sync=OutOfSync
+12:50:24 image=localhost:5001/campus-api@sha256:f8009d301996af9364c3dc3950d2f4933348496c27cd36acec9b2ee8ea3cc2ca sync=Synced
+
+Вывод: то же вмешательство, что в эксперименте 1. На этот раз контроллер сам вернул желаемое состояние.

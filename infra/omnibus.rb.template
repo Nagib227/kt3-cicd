@@ -1,0 +1,17 @@
+external_url 'http://gitlab.local:8929'
+nginx['listen_https'] = false
+letsencrypt['enable'] = false
+gitlab_rails['initial_root_password'] = 'ROOT_PASSWORD'
+gitlab_rails['usage_ping_enabled'] = false
+gitlab_rails['gitlab_signup_enabled'] = false
+gitlab_rails['auto_devops_enabled'] = false
+gitlab_rails['env'] = { 'MALLOC_ARENA_MAX' => '2' }
+registry['enable'] = false
+gitlab_pages['enable'] = false
+gitlab_kas['enable'] = false
+prometheus_monitoring['enable'] = false
+puma['worker_processes'] = 0
+puma['min_threads'] = 1
+puma['max_threads'] = 2
+sidekiq['max_concurrency'] = 4
+postgresql['shared_buffers'] = '128MB'

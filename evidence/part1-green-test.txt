@@ -1,0 +1,43 @@
+[0KRunning with gitlab-runner 17.11.4 (cc77edaf)[0;m
+[0K  on kubernetes E_EMWLH32, system ID: r_ROU9kMKb6T3t[0;m
+section_start:1794216595:prepare_executor
+[0K[0K[36;1mPreparing the "kubernetes" executor[0;m[0;m
+[0KUsing Kubernetes namespace: gitlab-runner[0;m
+[0KUsing Kubernetes executor with image mirror.gcr.io/library/python:3.13-slim ...[0;m
+[0KUsing attach strategy to execute scripts...[0;m
+section_end:1794216595:prepare_executor
+[0Ksection_start:1794216595:prepare_script
+[0K[0K[36;1mPreparing environment[0;m[0;m
+[0KUsing FF_USE_POD_ACTIVE_DEADLINE_SECONDS, the Pod activeDeadlineSeconds will be set to the job timeout: 10m0s...[0;m
+Waiting for pod gitlab-runner/runner-eemwlh32-project-1-concurrent-0-bnsm5quu to be running, status is Pending
+Running on runner-eemwlh32-project-1-concurrent-0-bnsm5quu via gitlab-runner-859d6b586c-99986...
+
+section_end:1794216598:prepare_script
+[0Ksection_start:1794216598:get_sources
+[0K[0K[36;1mGetting source from Git repository[0;m[0;m
+[32;1mFetching changes with git depth set to 20...[0;m
+Initialized empty Git repository in /builds/root/campus-app/.git/
+[32;1mCreated fresh repository.[0;m
+[32;1mChecking out 22830c4f as detached HEAD (ref is main)...[0;m
+
+[32;1mSkipping Git submodules setup[0;m
+
+section_end:1794216599:get_sources
+[0Ksection_start:1794216599:step_script
+[0K[0K[36;1mExecuting "step_script" stage of the job script[0;m[0;m
+[32;1m$ python -m unittest -v test_app.py[0;m
+test_not_ready (test_app.AppTest.test_not_ready) ... ok
+test_ready (test_app.AppTest.test_ready) ... ok
+test_version_default (test_app.AppTest.test_version_default) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+section_end:1794216600:step_script
+[0Ksection_start:1794216600:cleanup_file_variables
+[0K[0K[36;1mCleaning up project directory and file based variables[0;m[0;m
+
+section_end:1794216600:cleanup_file_variables
+[0K[32;1mJob succeeded[0;m

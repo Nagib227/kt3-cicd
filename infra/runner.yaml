@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab-runner
+  namespace: gitlab-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab-runner
+  template:
+    metadata:
+      labels:
+        app: gitlab-runner
+    spec:
+      serviceAccountName: gitlab-runner
+      containers:
+        - name: runner
+          image: gitlab/gitlab-runner:alpine-v17.11.4
+          imagePullPolicy: IfNotPresent
+          args: ["run"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /etc/gitlab-runner
+              readOnly: true
+      volumes:
+        - name: config
+          secret:
+            secretName: gitlab-runner-config
